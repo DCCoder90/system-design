@@ -43,15 +43,14 @@ Seeing as our core focus is SMS, Email, and push notifications it appears as tho
 ### Notification Deliveries
 
 | Endpoint Type | Free Tier | Price |
-
 | --- | --- | --- |
-
 | Mobile Push Notifications | 1 million notifications | $0.50 per million notifications |
 | Email/Email-JSON | 1,000 notifications |$2.00 per 100,000 notifications |
 | HTTP/s | 100,000 notifications | $0.60 per million notifications |
 | Simple Queue Service (SQS) | No charge for deliveries to SQS Queues. Standard SQS pricing applies. Data transfer charges apply between Amazon SNS and Amazon SQS. | --- |
 | AWS Lambda |No charge for deliveries to Lambda. Standard Lambda pricing applies. Data transfer charges apply between Amazon SNS and Lambda.|---|
 | Amazon Data Firehose | Standard Amazon Data Firehose pricing applies. Data transfer charges apply between SNS and Amazon Data Firehose. | $0.19 per million notifications |
+
 
 
 
