@@ -10,8 +10,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sns"
 )
 
-const awsRegion = "us-east-1"
-const snsTopicArn = "arn:aws:sns:us-east-1:"
+var awsRegion = "us-east-1"
+var snsTopicArn = "arn:aws:sns:us-east-1:123456789012:MyNotificationTopic"
 
 func main() {
 	if len(os.Args) != 3 {

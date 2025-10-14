@@ -2,3 +2,4 @@
 .terraform.lock.hcl
 go.mod
 go.sum
+subscriber-app
