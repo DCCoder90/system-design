@@ -64,5 +64,9 @@ I'll start by using [Terraform](https://developer.hashicorp.com/terraform) to ma
 
 The infrastructure is being stored int the [Infra directory](./Infra).   This includes some basic terraform to simply create a new user with access keys that our application can use as well as create the SNS topic and relevant IAM policies to ensure that we can use SNS.
 
+## Application
+
+A system diagram has been created at [Diagram.png](./diagram.png) that shows how this first pass will operate.  There will be two small applications written in [GoLang](https://go.dev).  The `Subscriber App` will subscribe users to the SNS topic, the `Sender App` will be used to create and send notifications.  GoLang was chosen due to it's ability to compile into a single, static binary, it's perfomance, and it's strong support for cloud services.
+
 
 
