@@ -60,5 +60,15 @@ Seeing as our core focus is SMS, Email, and push notifications it appears as tho
 
 
 
+\## Infra
+
+
+
+I'll start by using \[Terraform](https://developer.hashicorp.com/terraform) to manage the infrastructure.  This will allow us to more easily reproduce the exercise as well as quickly destroy all resources that we create when we are done with them since this is just a proof of concept/MVP.
+
+
+
+The infrastructure is being stored int the \[Infra directory](./Infra).   This includes some basic terraform to simply create a new user with access keys that our application can use as well as create the SNS topic and relevant IAM policies to ensure that we can use SNS.
+
 
 
