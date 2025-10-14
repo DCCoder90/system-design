@@ -1,8 +1,8 @@
-\# Scalable Notification System
+# Scalable Notification System
 
 
 
-\## Project Overview
+## Project Overview
 
 
 
@@ -10,7 +10,7 @@ This project is to generate and design the architecture and core implementation 
 
 
 
-\### Project Focus
+### Project Focus
 
 
 
@@ -18,7 +18,7 @@ As a design exercise this project will emphasize decoupling, fault tolerance, hi
 
 
 
-\### Structure
+### Structure
 
 
 
@@ -26,7 +26,7 @@ Within this directory there will be a sub-directory for each major iteration.  T
 
 
 
-\## Iterations
+## Iterations
 
 
 
@@ -34,4 +34,4 @@ This section is meant to outline the iterations of this project.
 
 
 
-* \[Version 1](./v1/ReadMe.md)
+* [Version 1](./v1/ReadMe.md)

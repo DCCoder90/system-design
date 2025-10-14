@@ -2,7 +2,7 @@ The first version is a Minimum Viable Product (MVP). This should only cover the 
 
 
 
-\## Cloud Provider
+## Cloud Provider
 
 To begin, we'll start looking at cloud providers to minimize effort.  AWS is a good first choice, being an industry leader and well established in the cloud space.
 
@@ -27,20 +27,20 @@ https://docs.aws.amazon.com/sns/latest/dg/welcome.html
 
 
 
-Seeing as our core focus is SMS, Email, and push notifications it appears as though SNS covers all of these topics and then some, this allows us to get a quick start with the ability to expand in the future if we so wish.  SNS also has reasonable pricing amounts as well.  This can be viewed on their \[pricing page](https://aws.amazon.com/sns/pricing/), however I will include a table below as well.
+Seeing as our core focus is SMS, Email, and push notifications it appears as though SNS covers all of these topics and then some, this allows us to get a quick start with the ability to expand in the future if we so wish.  SNS also has reasonable pricing amounts as well.  This can be viewed on their [pricing page](https://aws.amazon.com/sns/pricing/), however I will include a table below as well.
 
 
 
-\### API Requests
+### API Requests
 
 * Standard topic requests include publishes, batch publishes, topic owner operations, and subscription owner operations
 * First 1 million Amazon SNS requests per month are free, $0.50 per 1 million requests thereafter
 
-\*\*\*Note:\*\*\* Each 64KB chunk of published data is billed as 1 request. For example, a single publish with a 256KB payload is billed as four requests.
+***Note:*** Each 64KB chunk of published data is billed as 1 request. For example, a single publish with a 256KB payload is billed as four requests.
 
 
 
-\### Notification Deliveries
+### Notification Deliveries
 
 |Endpoint Type|Free Tier|Price|
 
@@ -60,15 +60,15 @@ Seeing as our core focus is SMS, Email, and push notifications it appears as tho
 
 
 
-\## Infra
+## Infra
 
 
 
-I'll start by using \[Terraform](https://developer.hashicorp.com/terraform) to manage the infrastructure.  This will allow us to more easily reproduce the exercise as well as quickly destroy all resources that we create when we are done with them since this is just a proof of concept/MVP.
+I'll start by using [Terraform](https://developer.hashicorp.com/terraform) to manage the infrastructure.  This will allow us to more easily reproduce the exercise as well as quickly destroy all resources that we create when we are done with them since this is just a proof of concept/MVP.
 
 
 
-The infrastructure is being stored int the \[Infra directory](./Infra).   This includes some basic terraform to simply create a new user with access keys that our application can use as well as create the SNS topic and relevant IAM policies to ensure that we can use SNS.
+The infrastructure is being stored int the [Infra directory](./Infra).   This includes some basic terraform to simply create a new user with access keys that our application can use as well as create the SNS topic and relevant IAM policies to ensure that we can use SNS.
 
 
 
