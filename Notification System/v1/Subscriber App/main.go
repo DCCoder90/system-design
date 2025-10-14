@@ -14,6 +14,13 @@ const awsRegion = "us-east-1"
 const snsTopicArn = "arn:aws:sns:us-east-1:"
 
 func main() {
+	if len(os.Args) != 3 {
+		fmt.Println("Usage: go run subscribe.go <protocol> <endpoint>")
+		fmt.Println("Example (email): go run subscribe.go email user@example.com")
+		fmt.Println("Example (sms):   go run subscribe.go sms +15551234567")
+		return
+	}
+
 	protocol := os.Args[1]
 	endpoint := os.Args[2]
 
