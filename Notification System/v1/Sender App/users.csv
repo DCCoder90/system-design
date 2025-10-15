@@ -1,0 +1,4 @@
+name,type,endpoint
+Alice,email,alice@example.com
+Bob,sms,+15551234567
+Charlie,email,charlie@example.com
