@@ -62,7 +62,7 @@ I'll start by using [Terraform](https://developer.hashicorp.com/terraform) to ma
 
 
 
-The infrastructure is being stored int the [Infra directory](./Infra).   This includes some basic terraform to simply create a new user with access keys that our application can use as well as create the SNS topic and relevant IAM policies to ensure that we can use SNS.
+The infrastructure is being stored in the [Infra directory](./Infra).   This includes some basic terraform to simply create a new user with access keys that our application can use as well as create the SNS topic and relevant IAM policies to ensure that we can use SNS.
 
 ## Application
 
