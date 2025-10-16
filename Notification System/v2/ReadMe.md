@@ -7,3 +7,43 @@ With the successful creation of the [first version](../v1/ReadMe.md) we have pro
    - Unsubscribe Page: A simple web page where users can unsubscribe from topics
    - Admin Page: A password protected page to create and send notifications
  - Handle Subscription Confirmations: Update a user's subscription status when they've confirmed their subscription
+
+### Update diagram
+
+In order to keep this repository from being clogged with images, I decided to rewrite the diagram from V1 in Mermaid.  Since the original was a simple drag and drop from Draw.io, this makes it easier to iterate on until I reach the final product.
+
+```mermaid
+graph TD
+    subgraph "Local Development Environment"
+       
+        subgraph "CLI Commands"
+            direction LR
+            Terraform("`terraform apply`")
+            SubscriberApp("`go run subscribe.go email user@example.com`")
+            SenderApp("`go run sender.go`")
+            AWSConfigure("`aws configure`")
+        end
+        
+        CLI -- "Executes" --> Terraform
+        CLI -- "Executes" --> SubscriberApp
+        CLI -- "Executes" --> SenderApp
+        CLI --> AWSConfigure
+        AWSConfigure -- "Configures" --> AWSConfig
+        
+        SenderApp -- "Reads" ---> UsersCSV["users.csv file"]
+        AWSSDK -- "Reads auth keys from" --> AWSConfig["~/.aws/credentials"]
+    end
+
+    subgraph "AWS Cloud"
+        IAM["IAM User & Policies"]
+        SNS["SNS Topic"]
+    end
+
+    Terraform -- "Provisions" --> IAM
+    Terraform -- "Provisions" --> SNS
+
+    IAM -- Authorizes user --> SNS
+    
+    SenderApp -- "Sends API call to publish" --> SNS
+    SubscriberApp -- "Sends API call to subscribe" --> SNS
+```
