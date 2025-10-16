@@ -128,3 +128,11 @@ graph TD
     SNSTopic -- "I. Delivers Notifications to" --> User
 ```
 
+### Lambda Functions
+
+As you can see from the provided diagram, our system now consists of 4 lambda functions:
+
+- **SubscribeUser**: Adds a new user to the DynamoDB table with a pending status and then tells SNS to send them a confirmation message.
+- **UnsubscribeUser**: Updates a user's status in DynamoDB to unsubscribed and removes their endpoint from the SNS topic to ensure they no longer receive notifications.
+- **SendNotification**: Takes a message payload and publishes it to the SNS topic for distribution to all confirmed subscribers.
+- **HandleConfirmation**: Triggered directly by an SNS confirmation event. Its only job is to update the user's status from pending to confirmed once they've verified their subscription.
