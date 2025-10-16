@@ -7,3 +7,5 @@ Now that [version 2](../v2/ReadMe.md) is completed, for all intents and purposes
 - **Subscription Management**: Users can only subscribe or unsubscribe. They cannot choose what types of notifications they want to receive.  On a similar note, Admins can only send to all subscribers rather than allowing for targeted notifications.
 
 As such, we will be expanding the scope of our system to address these key concerns for V3.
+
+> As an aside, I will note that code example will become less frequent throughout this project as the primary purpose is as a system design exercise rather than a coding exercise.
