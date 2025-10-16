@@ -75,3 +75,7 @@ erDiagram
         string updatedAt
     }
 ```
+
+### Web Portal
+
+In order to keep costs low and reduce the need for complex infrastructure in order to build the web portal we'll simply create a new [AWS S3 bucket](https://aws.amazon.com/s3/?nc2=type_a) and use it to host a [static site](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html).  We can then interact with our API via JavaScript calls. This approach creates a clean separation between our user interface and our business logic.
