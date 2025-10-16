@@ -47,3 +47,14 @@ graph TD
     SenderApp -- "Sends API call to publish" --> SNS
     SubscriberApp -- "Sends API call to subscribe" --> SNS
 ```
+
+## Start on V2
+
+In order to begin on V2 we'll first start by eliminating the go apps and instead leveraging [AWS lambdas](https://aws.amazon.com/lambda/) due to their cost-effectiveness, and scaling capabilities. 
+
+In order to expose them we will utilizes AWS's native API Gateway to create a fully managed, scalable set of RESTful HTTP endpoints. Each endpoint will be mapped directly to a specific Lambda function.
+
+This decouples our frontend (the web portal) from our backend logic. The API Gateway handles all the complexities of request/response cycles, traffic management, and security, allowing our Lambda functions to remain simple and focused on single tasks.
+
+In theory, we could use any available API gateway to manage this for us; however, the use of AWS API Gateway in this case is a clear choice due to its seamless native integration with AWS Lambda.
+
