@@ -56,5 +56,22 @@ In order to expose them we will utilizes AWS's native API Gateway to create a fu
 
 This decouples our frontend (the web portal) from our backend logic. The API Gateway handles all the complexities of request/response cycles, traffic management, and security, allowing our Lambda functions to remain simple and focused on single tasks.
 
-In theory, we could use any available API gateway to manage this for us; however, the use of AWS API Gateway in this case is a clear choice due to its seamless native integration with AWS Lambda.
+In theory, we could use any available API gateway to manage this for us; however, the use of [AWS API Gateway](https://aws.amazon.com/api-gateway/?nc2=type_a) in this case is a clear choice due to its seamless native integration with AWS Lambda.
 
+### Database
+
+The next step is to establish our database to store user and subscription information centrally. For this, we will use [Amazon DynamoDB](https://aws.amazon.com/dynamodb/?nc2=type_a), a fully managed NoSQL database service.
+
+We will create a single table, named `Subscriptions`, to hold our data. Each item in the table will represent a single user subscription and will include attributes like the user's `endpoint` (email/phone number), their `subscription_status` (e.g., "pending" or "confirmed"), their `medium` (sms,email,push) and the `date` they subscribed. 
+
+```mermaid
+erDiagram
+    Subscriptions {
+        string userId PK "Unique identifier for the user"
+        string endpoint "Contact point for user"
+        string type "ENUM('email', 'sms', 'push')"
+        string status "ENUM('pending', 'confirmed', 'unsubscribed')"
+        string createdAt
+        string updatedAt
+    }
+```
