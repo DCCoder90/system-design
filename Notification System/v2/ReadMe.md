@@ -136,3 +136,18 @@ As you can see from the provided diagram, our system now consists of 4 lambda fu
 - **UnsubscribeUser**: Updates a user's status in DynamoDB to unsubscribed and removes their endpoint from the SNS topic to ensure they no longer receive notifications.
 - **SendNotification**: Takes a message payload and publishes it to the SNS topic for distribution to all confirmed subscribers.
 - **HandleConfirmation**: Triggered directly by an SNS confirmation event. Its only job is to update the user's status from pending to confirmed once they've verified their subscription.
+
+## V2 Wrap up
+
+With the addition of the API gateway, Lambdas, and web portal, the second stage of our system design is now complete. We have successfully evolved the initial proof-of-concept into a more robust, and scalable service.
+
+### V2 Achievements
+
+By moving from a manual, CLI-based system to a fully serverless architecture, we've accomplished the initial goals laid out in the scope of V2.  A few highlights of changes are:
+
+* **Centralized Data**: The `users.csv` file has been replaced with a **DynamoDB** table, providing a single, scalable record for all subscription data.
+* **API Layer**: Instead of local Go applications, we now have a scalable API Gateway that exposes our backend logic, making the system accessible to any web client.
+* **Web Portal**: The S3-hosted web portal empowers users to subscribe and unsubscribe on their own,  reducing the need for manual intervention.
+* **Subscription Status**: The subscription confirmation process is now fully automated, ensuring that a user's status is accurately tracked without any manual steps.
+
+Ultimately, V2 transitions our project from a simple script into an actual serverless application. This not only adds more features but enables us to continue the work on scaling this to a truly production ready application.
