@@ -34,3 +34,79 @@ While using the WAF is a great first step, we also need to add a little extra pr
 This is going to be the largest change since starting this project.  This will move the notification system from a single to a flexible, multi-topic model. This will allow us to create distinct notification categories, such as "News", "Events", "Promotions", etc.  
 
 First, we'll introduce a new DynamoDB table, which we will call `TopicsTable`. This will allow us to map our topics to their full SNS `topic_arn`. Next we'll modify the existing `UsersTable`. We're going to add a new `subscriptions` attribute, which will be a StringSet. This set will hold the names of all the topics a specific user has subscribed to.
+
+This will require creating a new set of admin-only endpoints (e.g., POST /topics, GET /topics, DELETE /topics/{name}), which will be secured by the Cognito Authorizer we set up earlier. These will trigger a new `ManageTopicsLambda`. This lambda call SNS to `CreateTopic` or `DeleteTopic` and it will be responsible for updating the `TopicsTable` in DynamoDB to keep everything in sync.
+
+Next we need to update our existing Lambdas so they are aware of this new logic. The `SubscribeLambda` will now accept an email and a list of topics. The `SendLambda`, will now accept a message and a specific `target_topic_name`. It will look up the correct `topic_arn` from the `TopicsTable` and publish the message only to that topic. 
+
+### Updated Graph
+```mermaid
+graph TD
+    subgraph "Users"
+        User
+        Admin
+    end
+
+    subgraph "AWS"
+        subgraph "AWS Security & Auth"
+            Cognito
+            WAF
+        end
+
+        subgraph "Web Portals"
+            PublicPortal[Web Portal]
+            AdminPortal[Admin Portal]
+        end
+
+        APIGW
+
+        subgraph "Lambdas"
+            SubscribeLambda[Subscribe User]
+            UnsubscribeLambda[Unsubscribe User]
+            ConfirmLambda[Handle SNS Confirmation]
+            SendLambda[Send Notification]
+            ManageTopicsLambda[Manage Topics]
+        end
+        
+        subgraph "DynamoDB"
+            UsersTable[(Users Table)]
+            TopicsTable[(Topics Table)]
+        end
+
+        SNS
+    end
+
+    User --> PublicPortal
+    Admin --> AdminPortal
+
+    PublicPortal -- "JS API Call" --> APIGW
+    AdminPortal -- "JS API Call" --> APIGW
+    %% WAF --> APIGW
+
+    AdminPortal <--"1. Login"--> Cognito
+    Cognito -- "2. Issues JWT" --> AdminPortal
+    AdminPortal -- "3. API Call with JWT" --> APIGW
+    APIGW -- "4. Validates JWT w/" --> Cognito
+
+    APIGW -- "/send (Admin)" --> SendLambda
+    APIGW -- "/topics (Admin)" --> ManageTopicsLambda
+
+    APIGW -- "/subscribe" --> SubscribeLambda
+    APIGW -- "/unsubscribe" --> UnsubscribeLambda
+
+    ManageTopicsLambda -- "A. Create/Delete" --> SNS
+    ManageTopicsLambda -- "C. Updates" --> TopicsTable
+
+    SubscribeLambda -- "A. Saves user & topics" --> UsersTable
+    SubscribeLambda -- "B. Subscribes user to" --> SNS
+    UnsubscribeLambda -- "C. Updates user" --> UsersTable
+    UnsubscribeLambda -- "D. Unsubscribes from" --> SNS
+
+    SendLambda -- "F. Looks up Topic ARN" --> TopicsTable
+    SendLambda -- "G. Publishes to one topic" --> SNS
+
+    SNS -- "H. Triggers Confirmation" --> ConfirmLambda
+    ConfirmLambda -- "I. Updates user status to 'confirmed'" --> UsersTable
+    
+    SNS -- "J. Delivers to" --> User
+```
